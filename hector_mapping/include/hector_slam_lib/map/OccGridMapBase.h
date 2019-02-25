@@ -71,6 +71,23 @@ public:
     concreteGridFunctions.updateUnsetFree(this->getCell(index));
   }
 
+//added
+  void updateSetOccupied(int xMap, int yMap)
+  {
+    concreteGridFunctions.updateSetOccupied(this->getCell(xMap, yMap));
+  }
+
+  void updateSetFree(int xMap, int yMap)
+  {
+    concreteGridFunctions.updateSetFree(this->getCell(xMap, yMap));
+  }
+
+  void updateUnsetFree(int xMap, int yMap)
+  {
+    concreteGridFunctions.updateUnsetFree(this->getCell(xMap, yMap));
+  }
+//
+
   float getGridProbabilityMap(int index) const
   {
     return concreteGridFunctions.getGridProbability(this->getCell(index));
@@ -95,6 +112,16 @@ public:
   {
     return (this->getCell(index).isFree());
   }
+
+//added
+  void stablize()
+  {
+    int size = this->getSizeX() * this->getSizeY();
+    for (int i = 0; i < size; ++i) {
+      concreteGridFunctions.stablize(this->getCell(i));
+    }
+  }
+//
 
   float getObstacleThreshold() const
   {

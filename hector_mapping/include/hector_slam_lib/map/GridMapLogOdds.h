@@ -193,6 +193,19 @@ public:
   {
     logOddsOccupied = probToLogOdds(factor);
   }
+//added
+/**
+   * mark occupied cells as very occupied, and free cells very free
+   * @param cell The cell.
+   */
+  void stablize(LogOddsCell& cell) const
+  {
+    if (cell.isOccupied()) {
+      cell.logOddsVal = 50.0f;
+    } else if (cell.isFree()) {
+      cell.logOddsVal = -50.0f;
+    }
+  }
 
 protected:
 

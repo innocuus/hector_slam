@@ -58,6 +58,7 @@ class HectorDebugInfoProvider;
 class MapPublisherContainer
 {
 public:
+  int lastGetMapUpdateIndex_; //added
   ros::Publisher mapPublisher_;
   ros::Publisher mapMetadataPublisher_;
   nav_msgs::GetMap::Response map_;
@@ -90,15 +91,15 @@ public:
   void staticMapCallback(const nav_msgs::OccupancyGrid& map);
   void initialPoseCallback(const geometry_msgs::PoseWithCovarianceStampedConstPtr& msg);
 
-  /*
-  void setStaticMapData(const nav_msgs::OccupancyGrid& map);
-  */
+  bool loadStaticMap(); //added
+  void setStaticMapData(const nav_msgs::OccupancyGrid& map); //added
+  
 protected:
 
   HectorDebugInfoProvider* debugInfoProvider;
   HectorDrawings* hectorDrawings;
 
-  int lastGetMapUpdateIndex;
+  //int lastGetMapUpdateIndex;
 
   ros::NodeHandle node_;
 
@@ -125,6 +126,8 @@ protected:
   tf::Transform map_to_odom_;
 
   boost::thread* map__publish_thread_;
+
+  boost::shared_mutex slamProcPtr_mutex_; //added
 
   hectorslam::HectorSlamProcessor* slamProcessor;
   hectorslam::DataContainer laserScanContainer;
@@ -183,6 +186,7 @@ protected:
   bool p_map_with_known_poses_;
   bool p_timing_output_;
 
+  bool p_use_static_map_; //added
 
   float p_sqr_laser_min_dist_;
   float p_sqr_laser_max_dist_;
